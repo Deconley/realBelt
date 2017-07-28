@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Success Page</title>
+</head>
+<body>
+  <h1> Welcome {{ current_user.first_name }}</h1>
+  <a href="/logout">Logout</a>
+
+  <h3>Here are your friends:</h3>
+    {% for friend in friends %}
+      <p><a href="/profile/{{ friend.id }}"/> {{ friend.first_name }} {{ friend.last_name }}</a></p>
+      <form action="/remove-friend/{{ friend.id }}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="Remove friend!" />
+    {% endfor %}
+      </form>
+  <h3>Other Users not on your friend's list:</h3>
+  {% for user in users %}
+    <p><a href="/profile/{{ user.id }}"/> {{ user.first_name }} {{ user.last_name }}</a></p>
+    <form action="/add-friend/{{ user.id }}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Add as friend!" />
+  {% endfor %}
+</form>
+</body>
+</html>
